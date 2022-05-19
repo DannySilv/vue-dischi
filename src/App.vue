@@ -1,16 +1,23 @@
 <template>
   <div id="app">
-    <AppHeader />
+    <header>
+      <AppHeader />
+    </header>
+    <main>
+      <AppMain />
+    </main>
   </div>
 </template>
 
 <script>
 import AppHeader from "./components/AppHeader.vue";
+import AppMain from "./components/AppMain.vue";
 
 export default {
   name: "App",
   components: {
     AppHeader,
+    AppMain,
   },
 };
 </script>
@@ -20,7 +27,7 @@ export default {
 
 #app {
   width: 100%;
-  height: calc(100vh - 200px);
-  margin: 100px auto;
+  height: calc(100vh - 150px);
+  margin: 75px auto;
 }
 </style>
