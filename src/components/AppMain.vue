@@ -1,5 +1,8 @@
 <template>
-  <main>
+  <div class="loader" v-if="loading">
+    <AppLoading />
+  </div>
+  <div class="main" v-else>
     <div class="cards-container">
       <AppCard
         v-for="(element, index) in cards"
@@ -7,22 +10,25 @@
         :cardObject="element"
       />
     </div>
-  </main>
+  </div>
 </template>
 
 <script>
 import AppCard from "./AppCard.vue";
+import AppLoading from "./AppLoading.vue";
 import axios from "axios";
 
 export default {
   name: "AppMain",
   components: {
     AppCard,
+    AppLoading,
   },
   data() {
     return {
       cards: [],
       success: false,
+      loading: true,
     };
   },
   created() {
@@ -31,6 +37,7 @@ export default {
       .then((resp) => {
         this.cards = resp.data.response;
         this.success = resp.data.success;
+        this.loading = false;
       });
   },
 };
@@ -40,15 +47,19 @@ export default {
 $header-card-bg: #2e3a46;
 $main-bg: #1e2d3b;
 
-main {
+.loader {
   width: 100%;
-  height: calc(100vh - 200px);
+  height: 100%;
+}
+
+.main {
+  width: 100%;
   background-color: $main-bg;
   display: flex;
   align-items: center;
   .cards-container {
     width: 60%;
-    margin: 0 auto;
+    margin: 3% auto;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;

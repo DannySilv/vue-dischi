@@ -27,7 +27,6 @@ export default {
 
 #app {
   width: 100%;
-  height: calc(100vh - 150px);
   margin: 75px auto;
 }
 </style>
