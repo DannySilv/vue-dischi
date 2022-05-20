@@ -24,10 +24,11 @@ $main-bg: #1e2d3b;
 $text-color: #727873;
 
 .card-container {
-  width: calc(100% / 5 - 10px);
+  width: calc(100% / 5 - 15px);
   background-color: $header-card-bg;
   padding: 1.5%;
   margin: 5px 0;
+  margin-left: 15px;
   &:hover {
     transform: scale(1.1, 1.1) translateY(-5px);
     opacity: 0.9;

@@ -108,7 +108,7 @@ $text-color: #727873;
     width: 45%;
     margin: auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: wrap;
   }
 }
