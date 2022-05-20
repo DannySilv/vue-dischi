@@ -5,9 +5,7 @@
 <script>
 export default {
   name: "AppFilter",
-}
+};
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

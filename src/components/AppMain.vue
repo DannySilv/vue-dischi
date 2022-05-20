@@ -3,6 +3,16 @@
     <AppLoading />
   </div>
   <div class="main" v-else>
+    <div class="dropdown-container">
+      <div class="box dropdown" @click="dropdownToggleGenre()">
+        Genere <font-awesome-icon icon="fas fa-chevron-down" class="chevron" />
+        <AppDropdownGenre v-show="toggleGenre" />
+      </div>
+      <div class="box dropdown" @click="dropdownToggleAuthor()">
+        Artista <font-awesome-icon icon="fas fa-chevron-down" class="chevron" />
+        <AppDropdownAuthor v-show="toggleAuthor" />
+      </div>
+    </div>
     <div class="cards-container">
       <AppCard
         v-for="(element, index) in cards"
@@ -16,7 +26,8 @@
 <script>
 import AppCard from "./AppCard.vue";
 import AppLoading from "./AppLoading.vue";
-import AppFilter from "./AppFilter.vue"
+import AppDropdownGenre from "./AppDropdownGenre.vue";
+import AppDropdownAuthor from "./AppDropdownAuthor.vue";
 import axios from "axios";
 
 export default {
@@ -24,13 +35,16 @@ export default {
   components: {
     AppCard,
     AppLoading,
-    AppFilter,
+    AppDropdownGenre,
+    AppDropdownAuthor,
   },
   data() {
     return {
       cards: [],
       success: false,
       loading: true,
+      toggleGenre: false,
+      toggleAuthor: false,
     };
   },
   created() {
@@ -42,12 +56,29 @@ export default {
         this.loading = false;
       });
   },
+  methods: {
+    dropdownToggleGenre() {
+      if (this.toggleGenre === false) {
+        this.toggleGenre = true;
+      } else {
+        this.toggleGenre = false;
+      }
+    },
+    dropdownToggleAuthor() {
+      if (this.toggleAuthor === false) {
+        this.toggleAuthor = true;
+      } else {
+        this.toggleAuthor = false;
+      }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 $header-card-bg: #2e3a46;
 $main-bg: #1e2d3b;
+$text-color: #727873;
 
 .loader {
   width: 100%;
@@ -70,5 +101,34 @@ $main-bg: #1e2d3b;
 
 .active {
   border: 2px solid white;
+}
+
+.dropdown-container {
+  width: 30%;
+  margin-left: 5%;
+  margin-bottom: 30%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  .box {
+    width: 40%;
+    min-width: 100px;
+    color: $text-color;
+    background-color: $main-bg;
+    border: 2px solid $text-color;
+    padding: 0.3rem 5rem 0.3rem 0.5rem;
+    font-size: 0.8rem;
+    position: relative;
+    .chevron {
+      position: absolute;
+      right: 5%;
+      bottom: 25%;
+    }
+  }
+}
+
+.dropdown {
+  position: relative;
 }
 </style>
