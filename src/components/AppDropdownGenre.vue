@@ -1,65 +1,56 @@
 <template>
-  <div>
-    <div class="dropdown-content">
-      <a href="#" v-for="(element, index) in cards" :key="index">{{
-        element.genre
-      }}</a>
-    </div>
-  </div>
+  <select
+    @change="$emit('searchGenre', searchGenre)"
+    v-model="searchGenre"
+    class="dropdown-content"
+    name="filter"
+    id="filter"
+  >
+    <option value="" selected>Tutti i generi</option>
+    <option
+      v-for="(genre, index) in genres"
+      :key="`genre-${index}`"
+      :value="genre"
+    >
+      {{ genre }}
+    </option>
+  </select>
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "AppDropdownGenre",
+  props: {
+    genres: Array,
+  },
   data() {
     return {
-      cards: [],
-      success: false,
-      loading: true,
-      toggle: false,
+      searchGenre: "",
     };
-  },
-  created() {
-    axios
-      .get("https://flynn.boolean.careers/exercises/api/array/music")
-      .then((resp) => {
-        this.cards = resp.data.response;
-        this.success = resp.data.success;
-        this.loading = false;
-      });
   },
 };
 </script>
 
 <style lang="scss" scoped>
-$header-card-bg: #2e3a46;
 $main-bg: #1e2d3b;
 $text-color: #727873;
 
 .dropdown-content {
-  position: absolute;
-  left: -2px;
-  top: 23px;
   background-color: $main-bg;
-  width: 100px;
+  width: 150px;
   font-size: 0.7rem;
-  border: 2px;
-  border-top-color: $main-bg !important;
-  border-color: $text-color;
-  border-style: solid;
-  z-index: 1;
-}
-
-.dropdown-content a {
+  font-family: "Ubuntu", sans-serif;
+  font-weight: 500;
+  border: 2px solid $text-color;
+  border-radius: 2rem;
   color: $text-color;
-  padding: 0.3rem 5rem 0.3rem 0.5rem;
+  padding: 0.3rem 0.5rem;
+  margin-bottom: 5%;
   text-decoration: none;
   display: block;
-}
-
-.dropdown-content a:hover {
-  background-color: $header-card-bg;
+  option {
+    background-color: $main-bg;
+    font-weight: 500;
+  }
 }
 </style>

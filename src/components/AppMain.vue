@@ -4,18 +4,12 @@
   </div>
   <div class="main" v-else>
     <div class="dropdown-container">
-      <div class="box dropdown" @click="dropdownToggleGenre()">
-        Genere <font-awesome-icon icon="fas fa-chevron-down" class="chevron" />
-        <AppDropdownGenre v-show="toggleGenre" />
-      </div>
-      <div class="box dropdown" @click="dropdownToggleAuthor()">
-        Artista <font-awesome-icon icon="fas fa-chevron-down" class="chevron" />
-        <AppDropdownAuthor v-show="toggleAuthor" />
-      </div>
+      <AppDropdownGenre @searchGenre="selGenre($event)" :genres="genres" />
+      <AppDropdownAuthor @searchAuthor="selAuthor($event)" :authors="authors" />
     </div>
     <div class="cards-container">
       <AppCard
-        v-for="(element, index) in cards"
+        v-for="(element, index) in filterCards"
         :key="index"
         :cardObject="element"
       />
@@ -43,8 +37,10 @@ export default {
       cards: [],
       success: false,
       loading: true,
-      toggleGenre: false,
-      toggleAuthor: false,
+      genre: "",
+      author: "",
+      authors: [],
+      genres: [],
     };
   },
   created() {
@@ -54,22 +50,39 @@ export default {
         this.cards = resp.data.response;
         this.success = resp.data.success;
         this.loading = false;
+        this.genGenres();
+        this.genAuthors();
       });
   },
-  methods: {
-    dropdownToggleGenre() {
-      if (this.toggleGenre === false) {
-        this.toggleGenre = true;
-      } else {
-        this.toggleGenre = false;
-      }
+  computed: {
+    filterCards() {
+      const newCards = this.cards.filter((element) => {
+        return (
+          element.genre.includes(this.genre) &&
+          element.author.includes(this.author)
+        );
+      });
+      return newCards;
     },
-    dropdownToggleAuthor() {
-      if (this.toggleAuthor === false) {
-        this.toggleAuthor = true;
-      } else {
-        this.toggleAuthor = false;
-      }
+  },
+  methods: {
+    selGenre(event) {
+      this.genre = event;
+    },
+    genGenres() {
+      this.cards.forEach((element) => {
+        if (!this.genres.includes(element.genre))
+          this.genres.push(element.genre);
+      });
+    },
+    selAuthor(event) {
+      this.author = event;
+    },
+    genAuthors() {
+      this.cards.forEach((element) => {
+        if (!this.authors.includes(element.author))
+          this.authors.push(element.author);
+      });
     },
   },
 };
@@ -87,12 +100,13 @@ $text-color: #727873;
 
 .main {
   width: 100%;
+  height: calc(100vh - 200px);
   background-color: $main-bg;
   display: flex;
   align-items: center;
   .cards-container {
-    width: 60%;
-    margin: 3% auto;
+    width: 45%;
+    margin: auto;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -105,19 +119,18 @@ $text-color: #727873;
 
 .dropdown-container {
   width: 30%;
-  margin-left: 5%;
-  margin-bottom: 30%;
+  margin: auto;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
   align-items: flex-start;
   .box {
-    width: 40%;
-    min-width: 100px;
+    width: 150px;
     color: $text-color;
     background-color: $main-bg;
     border: 2px solid $text-color;
     padding: 0.3rem 5rem 0.3rem 0.5rem;
+    margin-bottom: 5%;
     font-size: 0.8rem;
     position: relative;
     .chevron {
