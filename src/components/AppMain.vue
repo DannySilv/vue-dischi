@@ -16,6 +16,7 @@
 <script>
 import AppCard from "./AppCard.vue";
 import AppLoading from "./AppLoading.vue";
+import AppFilter from "./AppFilter.vue"
 import axios from "axios";
 
 export default {
@@ -23,6 +24,7 @@ export default {
   components: {
     AppCard,
     AppLoading,
+    AppFilter,
   },
   data() {
     return {
